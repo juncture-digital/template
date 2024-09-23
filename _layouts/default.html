@@ -1,21 +1,6 @@
 <!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://v3.juncture-digital.org/index.css" rel="stylesheet">
-<main class="page-content" aria-label="Content" style="display:none;">
-  {{ content }}
-</main>
-<script type="module">
-    import 'https://v3.juncture-digital.org/wc/dist/js/index.js'
-    import { mount } from 'https://v3.juncture-digital.org/index.js'
-    window.jekyll = {
-        baseurl: '{{ site.baseurl }}',
-        source: {
-          owner: `{{ site.github.owner_name }}`,
-          repository: `{{ site.github.repository_name }}`,
-          branch: `{{ site.github.source.branch }}`,
-          path: `{{ page.path }}`
-        }
-      }
-    mount()
-    console.log(window.config)
-</script>
+<script>window.jekyll = {site:{baseurl:'{{site.baseurl}}',github:{owner_name:'{{site.github.owner_name}}',repository_name:'{{site.github.repository_name}}',source:{branch:'{{site.github.source.branch}}'}}},page:{path:'{{page.path}}',dir:'{{page.dir}}',name:'{{page.name}}'}}</script>
+<main style="visibility:hidden;">{{ content }}</main>
+<script href="https://cdn.jsdelivr.net/npm/juncture-digital@3.1/js/ghp.js" type="module"></script>
