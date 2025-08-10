@@ -132,12 +132,12 @@ for (let selector of selectors) {
   }
 }
 
+console.log(pageData)
 document.querySelectorAll('img').forEach((img) => {
   let src = new URL(img.src)
   if (location.origin !== src.origin) return
   let name = src.pathname.split('/').pop()
   if (['favicon.ico', 'favicon.png', 'favicon.svg'].includes(name)) return
-  let path = pageData.path.replace(/^_/, '').replace(/\/index\.md$/, '')
-  src.pathname = `${path}/${name}`
-  img.src = src.toString()
+  img.src = `https://raw.githubusercontent.com/${pageData.owner}/${pageData.repo}/main/${pageData.path.replace(/\/index.md/,'')}/${name}`
+  console.log(img.src)
 });

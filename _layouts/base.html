@@ -22,11 +22,15 @@
 
   <script>
     let pageData = {
+      owner: '{{site.github.owner_name}}',
+      repo: '{{site.github.repository_name}}',
+      branch: '{{site.github.source.branch}}',
       path: '{{ page.path }}',
       dir: '{{ page.dir }}',
       name: '{{ page.name }}',
       url: '{{ page.url }}',
-      permalink: '{{ page.permalink }}'
+      permalink: '{{ page.permalink }}',
+
     }
   </script>
 
