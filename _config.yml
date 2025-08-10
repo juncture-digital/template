@@ -6,11 +6,11 @@ author:
   name: Site owner name
   email: site_owner@some_domain.com
 
-github:
-  owner_name: gh-owner
-  repository_name: gh-repo
-  source:
-    branch: main
+#github:
+  #owner_name: gh-owner
+  #repository_name: gh-repo
+  #source:
+    #branch: main
 
 nav_pages:
   - index.md
