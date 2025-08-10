@@ -1,11 +1,11 @@
 ---
-title: Sample Post
+title: Sample Post 2
 description: A sample post.
 author: 
 date: 2025-01-01
 tags: 
 thumbnail: 
-permalink: 
+permalink: /template
 layout: post
 published: true
 ---

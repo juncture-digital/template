@@ -1,5 +1,5 @@
 let isMobile = ('ontouchstart' in document.documentElement && /mobi/i.test(navigator.userAgent) )
-
+  
 /**
  * Restructure an HTML element (generated from Markdown) so that each heading
  * and its following content are wrapped in nested <section> elements according to heading level.
@@ -131,3 +131,13 @@ for (let selector of selectors) {
     break
   }
 }
+
+document.querySelectorAll('img').forEach((img) => {
+  let src = new URL(img.src)
+  if (location.origin !== src.origin) return
+  let name = src.pathname.split('/').pop()
+  if (['favicon.ico', 'favicon.png', 'favicon.svg'].includes(name)) return
+  let path = pageData.path.replace(/^_/, '').replace(/\/index\.md$/, '')
+  src.pathname = `${path}/${name}`
+  img.src = src.toString()
+});
