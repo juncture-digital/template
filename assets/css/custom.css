@@ -1,3 +1,9 @@
+.site-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
 .site-title img {
   height: 1em;
 }

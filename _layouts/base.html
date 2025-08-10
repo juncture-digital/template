@@ -13,6 +13,9 @@
     <script id="loader" src="https://www.juncture-digital.io/js/juncture.js" data-ghbase="{{site.github.owner_name}}/{{site.github.repository_name}}/{{site.github.source.branch}}/{{page.path}}"></script>
     -->
     <link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
   </head>
 
   <body>
@@ -21,8 +24,6 @@
       <div class="wrapper">
 
         <a class="site-title" rel="author" href="{{ '/' | relative_url }}"><img src="{{ '/favicon.ico' | relative_url }}" alt="Site logo"> {{ site.title | escape }}</a>
-        
-        {% include search-lunr.html %}
 
         {% capture nav_items_string %}
           {% for nav_path in site.nav_pages %}
@@ -82,6 +83,11 @@
                 <a class="nav-item" href="{{ url | relative_url }}">{{ title | escape }}</a>
               {% endif %}
             {% endfor %}
+                    
+            <button class="search__toggle" type="button">
+              <span class="visually-hidden">Toggle search</span>
+              <i class="fas fa-search"></i>
+            </button>
           </div>
 
         </nav>
@@ -92,7 +98,15 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
+
+        <div class="search-content">
+          {% include search/search_form.html %}
+        </div>
+
+        <div class="initial-content">
         {{ content }}
+        </div>
+
       </div>
     </main>
 
@@ -138,6 +152,7 @@
     
     </footer>
 
+    {% include search/lunr-search-scripts.html %}
     <script src="{{ '/assets/js/index.js' | relative_url }}"></script>
     
     <!--
