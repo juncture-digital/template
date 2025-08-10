@@ -8,8 +8,11 @@
     {%- seo -%}
     <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
     {%- feed_meta -%} 
+    <!-- 
     <style>body{opacity:0;}</style>
     <script id="loader" src="https://www.juncture-digital.io/js/juncture.js" data-ghbase="{{site.github.owner_name}}/{{site.github.repository_name}}/{{site.github.source.branch}}/{{page.path}}"></script>
+    -->
+    <link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
   </head>
 
   <body>
@@ -134,7 +137,10 @@
       </div>
     
     </footer>
+
+    <script src="{{ '/assets/js/index.js' | relative_url }}"></script>
     
+    <!--
     <script>
       (function() {
         maxWidth = maxWidth || '{{ site.max-width }}'
@@ -145,6 +151,7 @@
         }
       })();
     </script>
+    -->
 
   </body>
 
