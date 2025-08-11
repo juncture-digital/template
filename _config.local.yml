@@ -1,6 +1,0 @@
-# _config.local.yml
-github:
-  owner_name: juncture-digital
-  repository_name: template
-  source:
-    branch: main
