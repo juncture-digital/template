@@ -1,15 +1,3 @@
-section {
-  margin: 2rem 0;
-}
-
-p:has(> img) {
-  margin: 0;
-}
-
-h1:empty, h2:empty, h3:empty, h4:empty, h5:empty, h6:empty {
-  display: none;
-}
-
 .site-title {
   display: flex;
   align-items: center;
@@ -19,18 +7,4 @@ h1:empty, h2:empty, h3:empty, h4:empty, h5:empty, h6:empty {
 .site-title img {
   height: 1em;
 }
-
-section.wrap {
-  display: flow-root;
-}
-.wrap > iframe, .wrap > p > img, .wrap > section {
-  float: right;
-  margin-left: 1rem;
-  width: 33%;
-}
-
-.wrap.left > iframe, .wrap.left > p > img, .wrap.left > section {
-  float: left;
-  margin-right: 1rem;
-  margin-left: 0;
 }

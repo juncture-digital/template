@@ -8,32 +8,16 @@
     {%- seo -%}
     <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
     {%- feed_meta -%} 
-    <!-- 
-    <style>body{opacity:0;}</style>
-    <script id="loader" src="https://www.juncture-digital.io/js/juncture.js" data-ghbase="{{site.github.owner_name}}/{{site.github.repository_name}}/{{site.github.source.branch}}/{{page.path}}"></script>
-    -->
-    <link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
+
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}">
+
+    <script id="loader" src="https://www.juncture-digital.io/js/juncture.js" data-ghbase="{{site.github.owner_name}}/{{site.github.repository_name}}/{{site.github.source.branch}}/{{page.path}}"></script>
 
   </head>
 
   <body>
-
-  <script>
-    let pageData = {
-      owner: '{{site.github.owner_name}}',
-      repo: '{{site.github.repository_name}}',
-      branch: '{{site.github.source.branch}}',
-      path: '{{ page.path }}',
-      dir: '{{ page.dir }}',
-      name: '{{ page.name }}',
-      url: '{{ page.url }}',
-      permalink: '{{ page.permalink }}',
-
-    }
-  </script>
-
 
     <header class="site-header">
       <div class="wrapper">
@@ -168,7 +152,6 @@
     </footer>
 
     {% include search/lunr-search-scripts.html %}
-    <script src="{{ '/assets/js/index.js' | relative_url }}" type="module"></script>
     
     <!--
     <script>
