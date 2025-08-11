@@ -1,3 +1,15 @@
+---
+title: Cheat Sheet
+description: Juncture Site Cheat Sheet.
+author: 
+date: 2025-01-01
+tags: 
+thumbnail: 
+permalink: /cheatsheet
+layout: post
+published: true
+---
+
 # Juncture Site Cheat Sheet
 
 This document provides simple instruction for common site management tasks.
