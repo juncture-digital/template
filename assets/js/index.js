@@ -1,4 +1,14 @@
-let isMobile = ('ontouchstart' in document.documentElement && /mobi/i.test(navigator.userAgent) )
+import 'https://cdn.jsdelivr.net/npm/js-md5@0.8.3/src/md5.min.js'
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/button/button.js';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/card/card.js';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/carousel/carousel.js';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/carousel-item/carousel-item.js';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/copy-button/copy-button.js';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/dialog/dialog.js';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/dropdown/dropdown.js';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/tab/tab.js';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/tab-group/tab-group.js';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace/cdn/components/tab-panel/tab-panel.js';let isMobile = ('ontouchstart' in document.documentElement && /mobi/i.test(navigator.userAgent) )
   
 /**
  * Restructure an HTML element (generated from Markdown) so that each heading
@@ -118,6 +128,145 @@ const restructureMarkdownToSections = (contentEl) => {
   return container
 }
 
+function mwImage(mwImg, width) {
+  width = width || 0
+  // Converts Wikimedia commons image URL to a thumbnail link
+  mwImg = mwImg.replace(/^wc:/,'').replace(/Special:FilePath\//, 'File:').split('File:').pop()
+  mwImg = decodeURIComponent(mwImg).replace(/ /g,'_')
+  const _md5 = md5(mwImg)
+  const extension = mwImg.split('.').pop()
+  let url = `https://upload.wikimedia.org/wikipedia/commons${width ? '/thumb' : ''}`
+  url += `/${_md5.slice(0,1)}/${_md5.slice(0,2)}/${mwImg}`
+  if (width > 0) {
+    url += `/${width}px-${mwImg}`
+    if (extension === 'svg') {
+      url += '.png'
+    } else if (extension === 'tif' || extension === 'tiff') {
+      url += '.jpg'
+    }
+  }
+  return url
+}
+
+/**
+ * Convert sub-sections inside a '.cards' section into a responsive grid of Shoelace cards.
+ * Each card uses:
+ * - The sub-section heading as the card header.
+ * - The first image as the card image.
+ * - All paragraphs and lists as the card content.
+ */
+const makeCards = (rootEl) => {
+  rootEl.querySelectorAll('section.cards').forEach(cardsSection => {
+
+    // Create a container for the card grid.
+    const cardGrid = document.createElement('div');
+    cardGrid.className = 'card-grid';
+
+    // Get all direct sub-sections within the cards section (skip the main heading).
+    const subsections = Array.from(cardsSection.querySelectorAll('section'));
+
+    subsections.forEach(sub => {
+      // Create a new sl-card element.
+      const card = document.createElement('sl-card');
+
+      // --- Card Header ---
+      const subHeading = sub.querySelector('h1, h2, h3, h4, h5, h6');
+      const firstLink = sub.querySelector('a[href]');
+      const title = firstLink?.innerHTML || `<strong>${subHeading.textContent}</strong>`
+
+      if (subHeading) {
+        const header = document.createElement('div');
+        header.setAttribute('slot', 'header');
+        
+        if (firstLink) {
+          const link = document.createElement('a');
+          link.href = firstLink.getAttribute('href');
+          link.innerHTML = title;
+          header.appendChild(link);
+          firstLink.parentElement.remove()
+        } else {
+          header.innerHTML = title;
+        }
+        card.appendChild(header);
+      }
+
+      // --- Card Image ---
+      const image = sub.querySelector('img');
+      if (image) {
+        if (image.src.startsWith('wc:')) image.src = mwImage(image.src, 300)
+        let imgParent = image.parentElement
+        image.setAttribute('slot', 'image');
+        card.appendChild(image);
+        imgParent.remove()
+      }
+
+      // --- Card Content ---
+      // Create a container for any paragraphs or lists.
+      const contentWrapper = document.createElement('div');
+      // Gather any paragraphs or lists (skip headings and images)
+      const contentElements = Array.from(sub.children).filter(el => {
+        return !/^H[1-6]$/.test(el.tagName) && el.tagName.toLowerCase() !== 'img';
+      });
+      if (contentElements.length > 1) {
+        let details = document.createElement('details')
+        contentWrapper.appendChild(details)
+        let summary = document.createElement('summary')
+        summary.innerHTML = contentElements[0].innerHTML
+        details.appendChild(summary)
+        for (let i = 1; i < contentElements.length; i++) {
+          details.appendChild(contentElements[i].cloneNode(true))
+        }
+      } else {
+        contentElements.forEach(el => {
+          contentWrapper.appendChild(el.cloneNode(true));
+        });      
+      }
+      card.appendChild(contentWrapper);
+
+      // Add the card to the grid.
+      cardGrid.appendChild(card);
+    });
+
+    // Optionally, remove the original sub-sections.
+    subsections.forEach(sub => sub.remove());
+
+    // Append the card grid to the cards section.
+    cardsSection.appendChild(cardGrid);
+  })
+}
+
+const makeTabs = (rootEl) => {
+  rootEl.querySelectorAll('section.tabs').forEach(section => {
+    let tabGroup = document.createElement('sl-tab-group');
+    Array.from(section.classList).forEach(cls => tabGroup.classList.add(cls))
+    Array.from(section.attributes).forEach(attr => tabGroup.setAttribute(attr.name, attr.value))
+    
+    Array.from(section.querySelectorAll(':scope > section'))
+    .forEach((tabSection, idx) => {
+      let tab = document.createElement('sl-tab')
+      tab.setAttribute('slot', 'nav')
+      tab.setAttribute('panel', `tab${idx+1}`)
+      if (idx === 0) tab.setAttribute('active', '')
+      tab.innerHTML = tabSection.querySelector('h1, h2, h3, h4, h5, h6')?.innerHTML || ''
+      tabGroup.appendChild(tab)      
+    })
+
+    Array.from(section.querySelectorAll(':scope > section'))
+    .forEach((tabSection, idx) => {
+      let tabPanel = document.createElement('sl-tab-panel')
+      tabPanel.setAttribute('name', `tab${idx+1}`)
+      if (idx === 0) tabPanel.setAttribute('active', '')
+      let tabContent = Array.from(tabSection.children).slice(1).map(el => el.outerHTML).join(' ')
+      tabPanel.innerHTML = tabContent
+      tabGroup.appendChild(tabPanel)
+      tabSection.remove()
+    })
+
+    // section.replaceWith(tabGroup)
+    section.appendChild(tabGroup)
+  })
+}
+
 let selectors = ['.post-content', '.page-content', 'body']
 if (document.getElementById('junctureScript')?.dataset.selector) selectors = [document.getElementById('junctureScript').dataset.selector, ...selectors]
 for (let selector of selectors) {
@@ -126,18 +275,19 @@ for (let selector of selectors) {
     document.body.style.opacity = 0;
     document.body.transition = 'opacity 0.5s ease-in-out';
     let restructured = restructureMarkdownToSections(el)
+    makeCards(restructured)
+    makeTabs(restructured)
     el.innerHTML = restructured.innerHTML
     document.body.style.opacity = 1
     break
   }
 }
 
-console.log(pageData)
 document.querySelectorAll('img').forEach((img) => {
   let src = new URL(img.src)
   if (location.origin !== src.origin) return
   let name = src.pathname.split('/').pop()
   if (['favicon.ico', 'favicon.png', 'favicon.svg'].includes(name)) return
   img.src = `https://raw.githubusercontent.com/${pageData.owner}/${pageData.repo}/main/${pageData.path.replace(/\/index.md/,'')}/${name}`
-  console.log(img.src)
 });
+

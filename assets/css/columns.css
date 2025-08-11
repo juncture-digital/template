@@ -1,0 +1,47 @@
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start; 
+  gap: 1rem;              /* optional gutter between items */
+  /*
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  */
+}
+
+.columns > :first-child {
+flex: 0 0 100%;         /* header takes full width */
+}
+
+.columns > *:not(:first-child) {
+flex: 1 1 200px;        /* 
+                            – “1 1 200px” means:
+                                • flex-grow: 1   → expand to fill leftover
+                                • flex-shrink: 1 → shrink if needed
+                                • flex-basis: 200px → minimum width before wrapping
+                            – you can adjust 200px up/down depending on
+                                how narrow you’re willing to let each item get
+                            */
+}
+
+.columns > *.larger {
+  flex: 2 1 400px;
+}
+
+.columns > iframe {
+  min-width: 200px;
+}
+
+.columns > iframe, .wrap > iframe {
+    margin-top: 0;
+}
+
+/* Ensure any heading within the .columns container spans the full width */
+.columns > h1,
+.columns > h2,
+.columns > h3,
+.columns > h4,
+.columns > h5,
+.columns > h6 {
+  grid-column: 1 / -1;
+}
