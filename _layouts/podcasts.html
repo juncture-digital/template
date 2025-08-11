@@ -46,8 +46,8 @@ layout: base
       {%- for post in site.podcasts -%}
       <li>
         {%- if post.thumbnail -%}
-          <div class="image-container" style="width: 250px; height: 160px; flex-shrink: 0; overflow: hidden;">
-            <img src="{{ post.thumbnail }}" alt="{{ post.title }}" class="post-image shadow" style="display: block; width: 100%; height: 100%; object-fit: cover;"/>
+          <div class="image-container" data-path="{{post.path}}" style="width: 250px; height: 160px; flex-shrink: 0; overflow: hidden;">
+            <img data-src="{{ post.thumbnail }}" alt="{{ post.title }}" class="post-image shadow" style="display: block; width: 100%; height: 100%; object-fit: cover;"/>
           </div>
         {%- endif -%}
         <div>
@@ -92,4 +92,22 @@ layout: base
 
 <script>
   let maxWidth = '{{ page.max-width }}';
+  let pageData = {
+    owner:  '{{site.github.owner_name}}',
+    repo:   '{{site.github.repository_name}}',
+    branch: '{{site.github.source.branch}}',
+    path:   '{{ page.path }}'
+  }
+  document.querySelectorAll('.post-image').forEach((el) => {
+    if (el.dataset?.src) {
+      if (el.dataset?.src.startsWith('wc:') || el.dataset?.src.startsWith('http')) {
+        el.src = `${imageServiceUrl}/${el.dataset?.src}/w_250`;
+      } else {
+        let postPath = el.parentElement.dataset?.path?.split('/').slice(0,-1) || []
+        el.src = postPath.length 
+          ? `${imageServiceUrl}/gh:${owner}/${repo}/${branch}/${postPath.join('/')}/${el.dataset?.src}/w_250`
+          : `${imageServiceUrl}/gh:${owner}/${repo}/${branch}/${el.dataset?.src}/w_250`;
+      }
+    }
+  });
 </script>

@@ -92,14 +92,13 @@ layout: base
 
 <script>
   let maxWidth = '{{ page.max-width }}';
-  let pageData={
+  let pageData = {
     owner:  '{{site.github.owner_name}}',
     repo:   '{{site.github.repository_name}}',
     branch: '{{site.github.source.branch}}',
     path:   '{{ page.path }}'
   }
   document.querySelectorAll('.post-image').forEach((el) => {
-    console.log(el)
     if (el.dataset?.src) {
       if (el.dataset?.src.startsWith('wc:') || el.dataset?.src.startsWith('http')) {
         el.src = `${imageServiceUrl}/${el.dataset?.src}/w_250`;
@@ -111,5 +110,4 @@ layout: base
       }
     }
   });
-
 </script>
