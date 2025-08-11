@@ -1,16 +1,16 @@
 ---
-title: Cheat Sheet
-description: Juncture Site Cheat Sheet.
+title: Usage Guides
+description: How to guides for common site administration tasks.
 author: 
 date: 2025-01-01
 tags: 
 thumbnail: 
-permalink: /cheatsheet
+permalink: /usage-guides
 layout: post
 published: true
 ---
 
-# Juncture Site Cheat Sheet
+# Juncture Site Administration
 
 This document provides simple instruction for common site management tasks.
 
