@@ -1,11 +1,11 @@
 ---
 title: Sample Post 2
-description: A sample post Sunflower.
+description: A sample post.
 author: 
 date: 2025-01-01
 tags: 
 thumbnail: 
-permalink: /template
+permalink: /sample-2
 layout: post
 published: true
 ---
