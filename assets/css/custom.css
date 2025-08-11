@@ -7,4 +7,7 @@
 .site-title img {
   height: 1em;
 }
+
+header.post-header {
+  display: none;;
 }
