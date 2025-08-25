@@ -13,20 +13,20 @@ layout: base
 
   {{ content }}
 
-  <hr/>
-  
-  {% capture tags %}
-    {% for tag in site.tags %}
-      {{ tag[0] }}
-    {% endfor %}
-  {% endcapture %}
+  {% assign all_tags = "" | split: "" %}
+  {% for article in site.articles %}
+    {% if article.tags %}
+      {% assign all_tags = all_tags | concat: article.tags %}
+    {% endif %}
+  {% endfor %}
+  {% assign unique_tags = all_tags | uniq | sort %}
 
-  {% assign num_tags = tags | number_of_words %}    
-  {%- if num_tags > 0 -%}
+
+  {%- if unique_tags.size > 0 -%}
     <hr style="margin:0;"/>
     <div class="site-tags" style="display: flex; background-color: #f8f8f8; padding: 6px; border-radius: 5px; flex-wrap: wrap;">
       <span style="font-weight:500;">Tags:&nbsp;</span>
-      {% assign sortedtags = tags | split:' ' | sort %}
+      {% assign sortedtags = unique_tags %}
       {% for tag in sortedtags %}
         <a href="{{ site.baseurl }}/tag/{{ tag }}">{{ tag }}</a>{% if forloop.last != true %},&nbsp;{% endif %}
       {% endfor %}
@@ -34,8 +34,8 @@ layout: base
     <hr style="margin:0;"/><br/>
   {%- endif -%}
 
-  {% assign posts = site.podcasts | where_exp:"item", "item.relative_path != '_podcasts/index.md'" %}
-  {%- if posts.size > 0 -%}
+  {% assign posts = site.articles | where_exp:"item", "item.relative_path != '_articles/index.md'" %}
+  {%- if content.size > 0 -%}
 
     {%- if page.list_title -%}
       <h2 class="post-list-heading">{{ page.list_title }}</h2>
@@ -44,6 +44,7 @@ layout: base
     <ul class="post-list">
       {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
       {%- for post in posts -%}
+
       <li>
         {%- if post.thumbnail -%}
           <div class="image-container" data-path="{{post.path}}" style="width: 250px; height: 160px; flex-shrink: 0; overflow: hidden;">
@@ -57,7 +58,6 @@ layout: base
             </a>
           </h3>
           <div class="post-meta">{{ post.date | date: date_format }}</div>
-
           {%- if post.description -%}
             {% assign excerpt = post.description %}
           {% else %}
