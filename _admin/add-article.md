@@ -27,7 +27,7 @@ published: true
     - **thumbnail**: 
     - **permalink**: 
     - **published**: This is set to `false` initially.  When the value is false the article will not appear in the article index.
-    - **featured**: This is set to `false` initially.  Set this to 'true' if the article should appear in the Featured Articles section of the home page.
+    - **featured**: This is set to `false` initially.  Set this to `true` if the article should appear in the Featured Articles section of the home page.
 
 ---
 
