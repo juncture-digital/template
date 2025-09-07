@@ -1,0 +1,42 @@
+{% assign post = include.item %}
+
+{%- if post.thumbnail -%}
+  <div class="image-container" data-path="{{ post.path }}">
+    <img data-src="{{ post.thumbnail }}" … class="post-image shadow"/>
+  </div>
+{%- endif -%}
+
+<div>
+  <h1>
+    <a class="post-link" href="{{ post.url | relative_url }}">
+      {{ post.title | escape }}
+    </a>
+  </h1>
+    
+  <div class="post-meta">
+    {{ post.author }}
+  </div>
+
+  {%- if post.description -%}
+    {% assign excerpt = post.description %}
+  {% else %}
+    {% assign excerpt = post.content | split: '<p>' | slice: 1 | first | split: '</p>' | first %}
+  {%- endif -%}
+  {{ excerpt }}
+
+  {% capture post_tags %}
+    {% for post_tag in post.tags %}
+    {{ post_tag[0] }}
+    {% endfor %}
+  {% endcapture %}
+  
+  {% assign num_post_tags = post.tags.size %}    
+  {%- if num_post_tags> 0 -%}
+    {% assign sortedtags = post_tags | split:' ' | sort %}
+    <br/><span class="post-meta">Tags:</span>
+    {% for tag in post.tags %}
+      <!-- <a href="{{ site.url }}/tag/{{ tag }}">{{ tag }}</a>{% if forloop.last != true %},{% endif %} -->
+      <a href="{{ site.baseurl }}/tag/{{ tag }}">{{ tag }}</a>{% if forloop.last != true %},{% endif %}
+    {% endfor %}
+  {%- endif -%}
+</div>
