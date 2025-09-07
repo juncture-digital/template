@@ -1,22 +1,16 @@
 ---
-title: Usage Guides
-description: How to guides for common site administration tasks.
+title: Adding a new article
+description: How to add a new article to the site.
 author: 
 date: 2025-01-01
-tags: 
+tags: admin
 thumbnail: 
-permalink: /usage-guides
+permalink: /admin/add-article
 layout: post
 published: true
 ---
 
-# Juncture Site Administration
-
-This document provides simple instruction for common site management tasks.
-
----
-
-## Adding a new article
+# Adding a new article
 
 1. Select and copy article template text from [_articles/template/index.md](https://raw.githubusercontent.com/juncture-digital/template/main/_articles/template/index.md)
 
@@ -29,10 +23,11 @@ This document provides simple instruction for common site management tasks.
     - **description**: 
     - **author**: 
     - **date**: Publish date in the form of `YYYY-MM-DD`
-    - **tags**: Optional tags for categorizing the article.  Multiple tags are space separated.  Refer to the [Adding a new tag](#adding-a-new-tag) section for information on how new tags are added. 
+    - **tags**: Optional tags for categorizing the article.  Multiple tags are space separated.  Refer to the [Adding a new tag](add-tag) page for information on how new tags are added. 
     - **thumbnail**: 
     - **permalink**: 
     - **published**: This is set to `false` initially.  When the value is false the article will not appear in the article index.
+    - **featured**: This is set to `false` initially.  Set this to 'true' if the article should appear in the Featured Articles section of the home page.
 
 ---
 

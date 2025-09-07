@@ -13,16 +13,28 @@ author:
     #branch: main
 
 nav_pages:
-  - index.md
-  - about.md
-  # - podcasts.md
-  - contact.md
+  - _pages/index.md
+  - _articles/index.md
+  # - _podcasts/index.md
+  - _pages/about.md
+  - _pages/contact.md
+  - _admin/index.md
+  - _examples/index.md
 
 collections:
   articles:
     output: true
     permalink: /:collection/:path/
   podcasts:
+    output: true
+    permalink: /:collection/:path/
+  pages:
+    output: true
+    permalink: /:collection/:path/
+  admin:
+    output: true
+    permalink: /:collection/:path/
+  examples:
     output: true
     permalink: /:collection/:path/
 

@@ -8,4 +8,6 @@ thumbnail:
 permalink: 
 layout: post
 published: false
+featured: false
 ---
+

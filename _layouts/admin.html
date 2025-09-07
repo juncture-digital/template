@@ -15,7 +15,7 @@ layout: base
   </div>
   
   {% assign all_tags = "" | split: "" %}
-  {% for article in site.articles %}
+  {% for article in site.admin %}
     {% if article.tags %}
       {% assign all_tags = all_tags | concat: article.tags %}
     {% endif %}
@@ -32,22 +32,8 @@ layout: base
     </div>
     <hr style="margin:0;"/><br/>
 
-    {%- comment -%}{% assign featured_articles = site.articles | where: "featured", true | sort: "date" | reverse %}{%- endcomment -%}
-    {% assign featured_articles = site.articles | where: "featured", true  | sort: "title" %}
-    {%- if featured_articles.size > 0 -%}
-      <br/><h1>Featured Articles</h1><br/>
-      <ul class="post-list featured">
-        {% for article in featured_articles %}
-          <li>
-            {% include post_list_item.html item=article %}
-          </li>
-        {% endfor %}
-      </ul>
-    {%- endif -%}
-
-    {% assign all_articles = site.articles | sort: "title" %}
+    {% assign all_articles = site.admin | where_exp:"item", "item.relative_path != '_admin/index.md'" | sort: "title" %}
     {%- if all_articles.size > 0 -%}
-      <br/><h1>All Articles</h1><br/>
       <ul class="post-list">
         {% for article in all_articles %}
           <li>

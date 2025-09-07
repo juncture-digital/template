@@ -3,26 +3,12 @@ layout: base
 ---
 
 <style>
-  .post-list li {
-    display: flex;
-    gap: 1em;
-  }
-  .post-meta {
-    font-size: 1rem;
-    color: #828282;
-    margin-bottom: 0.25rem
-  } 
   h1 {
-    margin-bottom: 0.5rem
+    font-size: 2rem;
   }
 </style>
 
 <article class="post">
-  {% if page.title %}
-    <h1 class="tag-title">{{ page.title }}</h1>
-  {% else %}
-    <h1 class="tag-title">Tag: {{ page.tag }}</h1>
-  {% endif %}
 
   <div class="post-content">
     {{ content }}

@@ -29,7 +29,7 @@ layout: base
     <hr style="margin:0;"/><br/>
   {%- endif -%}
 
-  {% assign podcasts = site.podcasts | sort: "date" | reverse %}
+  {% assign posts = site.podcasts | where_exp:"item", "item.relative_path != '_podcasts/index.md'" %}
     {%- if podcasts.size > 0 -%}
       <ul class="post-list">
         {% for podcast in podcasts %}

@@ -21,11 +21,11 @@ body {
 .site-title {
   display: flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.25em;
 }
 
 .site-title img {
-  height: 1em;
+  height: 1.2em;
 }
 
 header.post-header {
